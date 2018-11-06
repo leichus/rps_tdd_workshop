@@ -4,6 +4,8 @@ import sinonChai from 'sinon-chai';
 import ReactDOM from 'react-dom';
 import RPSApp from '../src/RPSApp.jsx';
 import * as sinon from 'sinon';
+import {Requests} from "../../rps/src/requests";
+import RoundRepoFake from "../../rps/src/roundRepoFake";
 
 const expect = chai.expect;
 chai.use(sinonChai);
@@ -112,6 +114,24 @@ describe('play form', function () {
         setInputValue("p1Throw", "");
         expect(document.querySelector("#p2Throw").value).to.be.empty;
     });
+
+    //history tests
+    it('history header displays on the page', () => {
+
+        renderApp({});
+        expect(page()).to.contain("History");
+
+    });
+
+    it('page displays a single history round', () => {
+        renderApp(new Requests(new RoundRepoFake()));
+
+        play("rock", "paper");
+
+        expect(page()).to.contain("P1:rock, p2:paper, result: P2Wins");
+
+    });
+    /////
 
     function setupDOM() {
         domFixture = document.createElement("div");

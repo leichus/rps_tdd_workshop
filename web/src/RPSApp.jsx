@@ -6,7 +6,8 @@ export default class extends React.Component {
         this.state = {
             result: "",
             p1Input: "",
-            p2Input: ""
+            p2Input: "",
+            history: [],
         };
 
         this.onClick = this.onClick.bind(this);
@@ -38,12 +39,22 @@ export default class extends React.Component {
         });
     }
 
+    rounds(roundArray) {
+        this.setState({history: roundArray});
+    }
+
+    noRounds() {
+        // this.setState({history: []});
+    }
+
     onClick() {
         this.props.requests.play(
             this.state.p1Input.toLowerCase(),
             this.state.p2Input.toLowerCase(),
             this
         );
+
+        this.props.requests.getHistory(this)
     }
 
     handleP1Change(event) {
@@ -88,7 +99,17 @@ export default class extends React.Component {
                 <button id='playButton' onClick={this.onClick}>Play</button>
                 <br/>
                 {this.state.result}
+                <br/>
+                <div>History</div>
+                {this.renderRounds()}
             </div>
         );
+    }
+
+    renderRounds() {
+
+        //iterate through array and give key to each div
+
+        return this.state.history.map((round) => <li key={}>{round.p1Throw + round.p2Throw + round.result}</li>)
     }
 }

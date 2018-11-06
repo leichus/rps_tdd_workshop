@@ -1,7 +1,7 @@
 {
   "name": "rps",
   "version": "0.0.0",
-  "main": "src/rps.js",
+  "main": "src/requests.js",
   "files": [
     "src/"
   ],
